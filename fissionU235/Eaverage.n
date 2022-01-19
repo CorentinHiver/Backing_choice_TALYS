@@ -1,0 +1,6 @@
+# d + 235U  Average neutron  emission energy
+# Q-value    = 2.60506E+00
+# 
+# # energies =     1
+#    E     E-average
+ 1.30000E+01 2.20089E+00

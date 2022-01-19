@@ -1,0 +1,6 @@
+projectile d
+element 13
+mass 26
+energy 13
+
+recoil y

@@ -1,0 +1,6 @@
+# d +  26Al Average neutron  emission energy
+# Q-value    = 5.23875E+00
+# 
+# # energies =     1
+#    E     E-average
+ 1.30000E+01 3.43058E+00

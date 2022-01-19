@@ -1,0 +1,14 @@
+Plusieurs mots clés sont très utiles pour avoir plus d'informations
+Ils sont regroupés dans la partie "Output" du chapitre "Keywords" de la documentation.
+
+outangle y permet de connaître la distribution angulaire des éjectiles
+outspectra y permet d'obtenir le spectre en énergie de chaque éjectile
+
+ddxmode n permet d'obtenir les section efficaces doubles-différentielles : 
+	 n = 1 distribution angulaire  pour chaque énergie
+	 n = 2 spectre en énergie à chaque angle
+	 n = 3 les deux précédents dans le même fichier
+
+isomers n permet de déterminer la durée de vie minimale des isomères que l'on veut
+
+recoil y permet de déterminer l'énergie cinétique de recul des noyaux produits par l'évaporation

@@ -1,0 +1,6 @@
+projectile a
+element 92
+mass 238
+energy 25
+
+isomer 1.e-12

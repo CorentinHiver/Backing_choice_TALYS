@@ -1,0 +1,5 @@
+projectile d
+element 92
+mass 235
+energy 13
+

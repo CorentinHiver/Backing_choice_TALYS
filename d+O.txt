@@ -1,0 +1,10 @@
+projectile d
+element 8
+mass 16
+energy 13
+
+isomer 1e-9
+#outangle y
+#outspectra y
+segment 3
+ddxmode 3
