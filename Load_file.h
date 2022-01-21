@@ -1,8 +1,8 @@
-#include "/homeijclab/hiver/CODES/c++/Calculs_Cible/coROOTlib.h"
+#include "../Root/coROOTlib.h"
 
-void loadSpectra (std::string file , Ejectile particle, TGraph *gr)
+void loadSpectra (std::string file , Ejectile particle, TGraph *gr, Double_t coefficient = 1)
 {
-	std::ifstream dataFile (file);	
+	std::ifstream dataFile (file);
 
 	if (dataFile)
 	{
@@ -10,16 +10,16 @@ void loadSpectra (std::string file , Ejectile particle, TGraph *gr)
 		bool read = false;
 		bool gamma = false;
 		bool proton = false;
-		while (std::getline(dataFile,line)) 
+		while (std::getline(dataFile,line))
 		{
 			if (line.size() > 3) // only read lines with at least three characters
 			{
-				//Gamma spectra : 
+				//Gamma spectra :
 				if (line == " Spectra for outgoing gamma   " and particle == Ejectile::Gamma) gamma = true;
 				if (line == " Spectra for outgoing neutron " and particle == Ejectile::Gamma) gamma = false;
 				if (read and gamma)
 				{
-					gr -> SetPoint(gr -> GetN(), stod(line.substr(0,8)),stod(line.substr(9,11)));
+					gr -> SetPoint(gr -> GetN(), stod(line.substr(0,8)), stod(line.substr(9,11))*coefficient);
 				}
 				if (line.substr(0,8) == "  Energy" and gamma) read = true;// tags the beggining of the data
 
@@ -31,7 +31,7 @@ void loadSpectra (std::string file , Ejectile particle, TGraph *gr)
 					gr -> SetPoint(gr -> GetN(), stod(line.substr(0,8)),stod(line.substr(9,11)));
 				}
 				if (line.substr(0,8) == "  Energy" and proton) read = true;// tags the beggining of the data
-				
+
 			}
 		}
 	}
@@ -43,7 +43,7 @@ void loadDdxSpectra(std::string file , Ejectile particle, Double_t Angle, TGraph
 	/*
 		Reads talys files with ddxmode3 keyword only
 	*/
-	std::ifstream dataFile (file);	
+	std::ifstream dataFile (file);
 
 	if (dataFile)
 	{
@@ -59,13 +59,13 @@ void loadDdxSpectra(std::string file , Ejectile particle, Double_t Angle, TGraph
 
 		bool section = false; //reading the 9. section : " 9. Double-differential cross sections per outgoing angle"
 
-		while (std::getline(dataFile,line)) 
+		while (std::getline(dataFile,line))
 		{
 			if (line.size() > 3) // only read lines with at least three characters
 			{
 				if (line ==  " 9. Double-differential cross sections per outgoing angle")section = true;
 				//Proton spectra :
-				if (line.substr(0,30) == " DDX for outgoing proton   at " and particle == Ejectile::Proton and section == true) 
+				if (line.substr(0,30) == " DDX for outgoing proton   at " and particle == Ejectile::Proton and section == true)
 					{
 						proton = true;
 						if (stod(line.substr(30,7)) == Angle) angle = true;
@@ -77,7 +77,7 @@ void loadDdxSpectra(std::string file , Ejectile particle, Double_t Angle, TGraph
 					gr -> SetPoint(gr -> GetN(), stod(line.substr(0,8)),stod(line.substr(9,12)));
 				}
 				if (line.substr(0,9) == "    E-out" and proton and angle) read = true;// tags the beggining of the data
-				
+
 			}
 		}
 	}
@@ -104,14 +104,14 @@ void loadAngleElastic(std::string file, TGraph *gr)
 
 		bool section = false; //reading the 8a2. section : " 8a2. Elastic scattering angular distribution"
 
-		while (std::getline(dataFile,line)) 
+		while (std::getline(dataFile,line))
 		{
 			if (line.size() >3 )
 			{
 				std::string header = " Angle        Total            Direct       Compound       c.s/Rutherford";
 				if (line == " 8a2. Elastic scattering angular distribution") read = true;
 				else if (line ==  " 8b2. Inelastic angular distributions") read = false;
-				else if (read and line != header) 
+				else if (read and line != header)
 					gr -> SetPoint(gr -> GetN(), stod(line.substr(0,6)),stod(line.substr(11,11)));
 			}
 		}
@@ -123,7 +123,7 @@ void loadDdxSpectra2D(std::string file , Ejectile particle, TGraph2D *gr)
 	/*
 		Reads talys files with ddxmode3 keyword only
 	*/
-	std::ifstream dataFile (file);	
+	std::ifstream dataFile (file);
 
 	if (dataFile)
 	{
@@ -138,7 +138,7 @@ void loadDdxSpectra2D(std::string file , Ejectile particle, TGraph2D *gr)
 
 		bool section = false; //reading the 9. section : " 9. Double-differential cross sections per outgoing angle"
 
-		while (std::getline(dataFile,line)) 
+		while (std::getline(dataFile,line))
 		{
 			if (line.size() > 3) // only read lines with at least three characters
 			{
@@ -192,7 +192,7 @@ void loadDdxSpectra2D(std::string file , Ejectile particle, TGraph2D *gr)
 							gr -> SetPoint(gr -> GetN(), stod(line.substr(0,8)), Angle, stod(line.substr(9,12)));
 					}
 				}
-				
+
 
 				//------------------------//
 				//--- Deuteron spectra ---//
@@ -220,7 +220,7 @@ void loadDdxSpectra2D(std::string file , Ejectile particle, TGraph2D *gr)
 				//----------------------//
 				//--- Triton spectra ---//
 				//----------------------//
-				
+
 				else if (particle == Ejectile::Triton and section)
 				{
 					if (line.substr(0,17) == " DDX for outgoing")
